@@ -1,11 +1,8 @@
 'use client';
 
 import React from 'react';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
 import DashboardStats from '@/components/DashboardStats';
 import ProjectCard from '@/components/ProjectCard';
-import CommunityProposals from '@/components/CommunityProposals';
 
 // Mock data for projects
 const mockProjects = [
@@ -53,47 +50,39 @@ const mockStats = {
 
 export default function Home() {
 	return (
-		<div className="min-h-screen bg-gray-50">
-			<Header />
-			<Sidebar />
+		<div className="max-w-7xl mx-auto">
+			{/* Page Title */}
+			<div className="mb-8">
+				<h1 className="text-3xl font-bold text-gray-900">
+					Projetos em Destaque
+				</h1>
+				<p className="text-gray-600 mt-2">
+					Acompanhe e participe dos projetos em desenvolvimento na sua
+					cidade
+				</p>
+			</div>
 
-			{/* Main Content */}
-			<main className="ml-64 pt-16 p-6">
-				<div className="max-w-7xl mx-auto">
-					{/* Page Title */}
-					<div className="mb-8">
-						<h1 className="text-3xl font-bold text-gray-900" style={{ marginTop: '2.5rem' }}>
-							Projetos em Destaque
-						</h1>
-						<p className="text-gray-600 mt-2">
-							Acompanhe e participe dos projetos em desenvolvimento na sua
-							cidade
-						</p>
-					</div>
+			{/* Dashboard Stats */}
+			<DashboardStats stats={mockStats} />
 
-					{/* Dashboard Stats */}
-					<DashboardStats stats={mockStats} />
-
-					{/* Projects Grid */}
-					<div className="space-y-6">
-						<h2 className="text-xl font-semibold text-gray-900">
-							Projetos Recentes
-						</h2>
-						<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-							{mockProjects.map((project) => (
-								<ProjectCard key={project.id} project={project} />
-							))}
-						</div>
-					</div>
-
-					{/* Load More Button */}
-					<div className="mt-8 text-center">
-						<button className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-							Carregar Mais Projetos
-						</button>
-					</div>
+			{/* Projects Grid */}
+			<div className="space-y-6">
+				<h2 className="text-xl font-semibold text-gray-900">
+					Projetos Recentes
+				</h2>
+				<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+					{mockProjects.map((project) => (
+						<ProjectCard key={project.id} project={project} />
+					))}
 				</div>
-			</main>
+			</div>
+
+			{/* Load More Button */}
+			<div className="mt-8 text-center">
+				<button className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+					Carregar Mais Projetos
+				</button>
+			</div>
 		</div>
 	);
 }

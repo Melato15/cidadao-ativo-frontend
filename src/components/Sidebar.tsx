@@ -1,11 +1,16 @@
+'use client';
+
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 const Sidebar: React.FC = () => {
+  const pathname = usePathname();
+  
   const menuItems = [
-    { icon: '🏠', label: 'Início', active: true, url: '/home' },
-    { icon: '📄', label: 'Propostas da Comunidade', active: false, url: '/proposals' },
-    { icon: '📊', label: 'Dashboard', active: false, url: '/dashboard' },
-    { icon: '🚩', label: 'Denúncias', active: false, url: '/reports' },
+    { icon: '🏠', label: 'Início', url: '/home' },
+    { icon: '📄', label: 'Propostas da Comunidade', url: '/proposals' },
+    { icon: '📊', label: 'Dashboard', url: '/dashboard' },
+    { icon: '🚩', label: 'Denúncias', url: '/reports' },
   ];
 
   return (
@@ -18,7 +23,7 @@ const Sidebar: React.FC = () => {
               key={index}
               href={item.url}
               className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                item.active
+                pathname === item.url
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
                   : 'text-gray-700 hover:bg-gray-50'
               }`}
