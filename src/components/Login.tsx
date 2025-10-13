@@ -73,6 +73,11 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Prevent multiple submissions
+    if (isLoading) {
+      return;
+    }
+    
     if (!validateForm()) {
       return;
     }
@@ -132,7 +137,7 @@ const Login: React.FC = () => {
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate role="form" aria-label="Login form">
             <Input
               id="cpf"
               label="CPF"
