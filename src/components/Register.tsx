@@ -118,28 +118,38 @@ const Register: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Integrate with NestJS backend API
-      console.log('Form data to send:', {
-        ...formData,
-        cpf: formData.cpf.replace(/\D/g, '') // Send CPF without mask
+      const registerData = {
+        name: formData.fullName,
+        email: `${formData.cpf.replace(/\D/g, '')}@cidadaoativo.com`, // Email temporário baseado no CPF
+        cpf: formData.cpf.replace(/\D/g, ''), // Send CPF without mask
+        password: formData.password,
+        role: 'citizen'
+      };
+
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registerData),
       });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      alert('Cadastro realizado com sucesso!');
-      
-      // Reset form
-      setFormData({
-        fullName: '',
-        cpf: '',
-        birthDate: '',
-        password: '',
-        confirmPassword: ''
-      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Registration successful:', data);
+        
+        alert('Cadastro realizado com sucesso! Você será redirecionado para o login.');
+        
+        // Redirect to login page
+        window.location.href = '/login';
+      } else {
+        const errorData = await response.json();
+        console.error('Registration failed:', errorData);
+        alert(errorData.message || 'Erro ao realizar cadastro. Verifique os dados e tente novamente.');
+      }
     } catch (error) {
       console.error('Registration error:', error);
-      alert('Erro ao realizar cadastro. Tente novamente.');
+      alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
     } finally {
       setIsSubmitting(false);
     }

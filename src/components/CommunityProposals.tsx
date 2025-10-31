@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Button from '@/components/Button';
 import ProposalCard from '@/components/ProposalCard';
@@ -70,6 +70,50 @@ const CommunityProposals: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCategory, setFilterCategory] = useState<string>('Todas');
   const [filterNeighborhood, setFilterNeighborhood] = useState<string>('Todos');
+  const [loading, setLoading] = useState(true);
+
+  // Carregar propostas do backend ao montar o componente
+  useEffect(() => {
+    const fetchProposals = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/projects');
+        if (response.ok) {
+          const data = await response.json();
+          const mappedProposals: CommunityProposal[] = data.map((project: any) => ({
+            id: project.id,
+            title: project.title,
+            description: project.description,
+            category: mapCategoryToFrontend(project.category),
+            neighborhood: project.neighborhood,
+            author: project.author?.name || 'Usuário',
+            createdAt: new Date(project.createdAt).toISOString().split('T')[0]
+          }));
+          setProposals(mappedProposals);
+        }
+      } catch (error) {
+        console.error('Error fetching proposals:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProposals();
+  }, []);
+
+  // Função auxiliar para mapear categorias do backend para o frontend
+  const mapCategoryToFrontend = (category: string): CommunityProposal['category'] => {
+    const categoryMap: Record<string, CommunityProposal['category']> = {
+      'infrastructure': 'Infraestrutura',
+      'environment': 'Meio Ambiente',
+      'security': 'Segurança',
+      'education': 'Educação',
+      'health': 'Saúde',
+      'culture': 'Cultura',
+      'transportation': 'Transporte',
+      'other': 'Outros'
+    };
+    return categoryMap[category] || 'Outros';
+  };
 
   const categories = [
     'Todas',
@@ -96,16 +140,50 @@ const CommunityProposals: React.FC = () => {
     'Industrial'
   ];
 
-  const handleAddProposal = (newProposalData: Omit<CommunityProposal, 'id' | 'author' | 'createdAt'>) => {
-    const newProposal: CommunityProposal = {
-      ...newProposalData,
-      id: proposals.length + 1,
-      author: 'Usuário Atual', // Em uma aplicação real, isso viria do contexto de autenticação
-      createdAt: new Date().toISOString().split('T')[0]
-    };
+  const handleAddProposal = async (newProposalData: Omit<CommunityProposal, 'id' | 'author' | 'createdAt'>) => {
+    try {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        alert('Você precisa estar logado para criar uma proposta');
+        return;
+      }
 
-    setProposals(prev => [newProposal, ...prev]);
-    setShowAddForm(false);
+      const response = await fetch('http://localhost:3001/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title: newProposalData.title,
+          description: newProposalData.description,
+          category: newProposalData.category.toLowerCase().replace(' ', '_'),
+          neighborhood: newProposalData.neighborhood,
+          status: 'active'
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const newProposal: CommunityProposal = {
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          category: newProposalData.category,
+          neighborhood: data.neighborhood,
+          author: data.author?.name || 'Usuário',
+          createdAt: new Date(data.createdAt).toISOString().split('T')[0]
+        };
+        setProposals(prev => [newProposal, ...prev]);
+        setShowAddForm(false);
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Erro ao criar proposta');
+      }
+    } catch (error) {
+      console.error('Error creating proposal:', error);
+      alert('Erro ao conectar com o servidor');
+    }
   };
 
   const filteredProposals = proposals.filter(proposal => {
