@@ -76,7 +76,7 @@ const CommunityProposals: React.FC = () => {
   useEffect(() => {
     const fetchProposals = async () => {
       try {
-        const response = await fetch('http://localhost:3001/projects');
+        const response = await fetch('http://localhost:3001/community-proposals');
         if (response.ok) {
           const data = await response.json();
           const mappedProposals: CommunityProposal[] = data.map((project: any) => ({
@@ -148,7 +148,19 @@ const CommunityProposals: React.FC = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:3001/projects', {
+      // Mapeia a categoria do frontend para o backend
+      const categoryMap: Record<string, string> = {
+        'Infraestrutura': 'infrastructure',
+        'Meio Ambiente': 'environment',
+        'Segurança': 'security',
+        'Educação': 'education',
+        'Saúde': 'health',
+        'Cultura': 'culture',
+        'Transporte': 'transportation',
+        'Outros': 'other'
+      };
+
+      const response = await fetch('http://localhost:3001/community-proposals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +169,7 @@ const CommunityProposals: React.FC = () => {
         body: JSON.stringify({
           title: newProposalData.title,
           description: newProposalData.description,
-          category: newProposalData.category.toLowerCase().replace(' ', '_'),
+          category: categoryMap[newProposalData.category],
           neighborhood: newProposalData.neighborhood,
           status: 'active'
         }),
@@ -199,9 +211,11 @@ const CommunityProposals: React.FC = () => {
       return acc;
     }, {} as Record<string, number>);
     
-    const topCategory = Object.entries(categoriesCount).reduce((a, b) => 
-      categoriesCount[a[0]] > categoriesCount[b[0]] ? a : b
-    )[0];
+    const topCategory = Object.entries(categoriesCount).length > 0
+      ? Object.entries(categoriesCount).reduce((a, b) => 
+          categoriesCount[a[0]] > categoriesCount[b[0]] ? a : b
+        )[0]
+      : 'Nenhuma';
 
     return { totalProposals, topCategory };
   };

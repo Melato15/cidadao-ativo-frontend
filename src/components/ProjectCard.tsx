@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface Project {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
-  status: 'Em Votação' | 'Em Análise' | 'Aprovado' | 'Rejeitado' | 'Em Execução' | 'Concluído';
+  status: 'Em Votação' | 'Em Análise' | 'Aprovado' | 'Rejeitado' | 'Em Execução' | 'Concluído' | string;
   neighborhood: string;
   councilMember: string;
   votes: number;

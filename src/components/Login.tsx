@@ -90,7 +90,7 @@ const Login: React.FC = () => {
         password: formData.password
       };
 
-      const response = await fetch('http://localhost:3001/auth/citizen/login', {
+      const response = await fetch('http://localhost:3001/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

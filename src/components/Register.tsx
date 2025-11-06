@@ -94,7 +94,7 @@ const Register: React.FC = () => {
     if (isEmpty(formData.password)) {
       newErrors.password = 'Senha é obrigatória';
     } else if (!isValidPassword(formData.password)) {
-      newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
+      newErrors.password = 'Senha deve ter pelo menos 8 caracteres';
     }
 
     // Validate confirm password
@@ -145,7 +145,19 @@ const Register: React.FC = () => {
       } else {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
-        alert(errorData.message || 'Erro ao realizar cadastro. Verifique os dados e tente novamente.');
+        
+        // Trata mensagens de erro específicas
+        let errorMessage = 'Erro ao realizar cadastro. Verifique os dados e tente novamente.';
+        
+        if (errorData.message) {
+          if (Array.isArray(errorData.message)) {
+            errorMessage = errorData.message.join(', ');
+          } else {
+            errorMessage = errorData.message;
+          }
+        }
+        
+        alert(errorMessage);
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -208,7 +220,7 @@ const Register: React.FC = () => {
               value={formData.password}
               onChange={handleInputChange('password')}
               error={errors.password}
-              placeholder="Digite sua senha (mínimo 6 caracteres)"
+              placeholder="Digite sua senha (mínimo 8 caracteres)"
               autoComplete="new-password"
             />
 
@@ -231,9 +243,6 @@ const Register: React.FC = () => {
                 className="w-full"
                 isLoading={isSubmitting}
                 disabled={isSubmitting}
-                onClick={() => {
-                  window.location.href = '/';
-                }}
               >
                 {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
               </Button>

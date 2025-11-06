@@ -109,12 +109,12 @@ export const passwordsMatch = (
 };
 
 /**
- * Validates password strength (minimum 6 characters)
+ * Validates password strength (minimum 8 characters)
  * @param password - The password to validate
  * @returns true if password is valid, false otherwise
  */
 export const isValidPassword = (password: string): boolean => {
-  return password.length >= 6;
+  return password.length >= 8;
 };
 
 /**
@@ -145,8 +145,8 @@ export const isValidBirthDate = (dateString: string): boolean => {
     age--;
   }
 
-  // Check if person is at least 18 years old
-  return age >= 18;
+  // Check if person is at least 16 years old
+  return age >= 16;
 };
 
 /**

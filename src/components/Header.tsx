@@ -1,17 +1,53 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkLoginStatus = () => {
+    // Verifica se o usuário está logado (se existe token no localStorage)
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+  };
+
+  useEffect(() => {
+    // Verifica o status de login ao carregar
+    checkLoginStatus();
+
+    // Adiciona listener para mudanças no localStorage (login/logout em outras abas)
+    const handleStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Verifica periodicamente o status (para detectar mudanças na mesma aba)
+    const interval = setInterval(checkLoginStatus, 1000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    setIsLoggedIn(false);
+    window.location.href = '/login';
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 h-16">
       <div className="flex items-center justify-between px-4 h-full">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
+        <a href="/home" className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
           <span className="text-2xl">👥</span>
           <h1 className="text-xl font-bold text-gray-800">Cidadão Ativo</h1>
-        </div>
+        </a>
 
         {/* Search Bar */}
-        <div className="flex-1 max-w-md mx-8">
+        {/* <div className="flex-1 max-w-md mx-8">
           <div className="relative">
             <input
               type="text"
@@ -34,17 +70,28 @@ const Header: React.FC = () => {
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        {/* Auth Buttons */}
-        <div className="flex items-center space-x-3">
+        {/* Auth Buttons - Exibidos dependendo do estado de login */}
+        {isLoggedIn ? (
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-red-600 font-medium hover:text-red-700 transition-colors"
+            >
+              Sair
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-3">
             <a href="/login" className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors">
-            Entrar
+              Entrar
             </a>
-          <a href="/register" className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-            Cadastrar
-          </a>
-        </div>
+            <a href="/register" className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              Cadastrar
+            </a>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -40,127 +40,30 @@ interface Report {
   }>;
 }
 
-// Dados mock para demonstração
-const mockReports: Report[] = [
-  {
-    id: '1',
-    title: 'Buraco na pista prejudica trânsito',
-    description: 'Há um buraco grande na Rua das Flores que está causando acidentes e danificando veículos.',
-    category: 'Infraestrutura',
-    priority: 'Alta',
-    status: 'Em Análise',
-    reporter: {
-      name: 'João Silva',
-      phone: '(47) 99999-1234',
-      email: 'joao@email.com',
-      anonymous: false
-    },
-    location: {
-      neighborhood: 'Centro',
-      address: 'Rua das Flores, 123'
-    },
-    dateReported: '2024-09-20',
-    dateUpdated: '2024-09-22',
-    assignedTo: 'Maria Santos - Secretaria de Obras',
-    comments: [
-      {
-        id: '1',
-        author: 'Maria Santos',
-        content: 'Denúncia recebida. Enviando equipe para avaliação.',
-        date: '2024-09-21'
-      }
-    ]
-  },
-  {
-    id: '2',
-    title: 'Lixo acumulado em terreno baldio',
-    description: 'Terreno abandonado acumulando lixo e atraindo pragas urbanas.',
-    category: 'Meio Ambiente',
-    priority: 'Média',
-    status: 'Nova',
-    reporter: {
-      name: 'Anônimo',
-      anonymous: true
-    },
-    location: {
-      neighborhood: 'Boa Vista',
-      address: 'Rua dos Pássaros, próximo ao número 456'
-    },
-    dateReported: '2024-09-25',
-    dateUpdated: '2024-09-25',
-    comments: []
-  },
-  {
-    id: '3',
-    title: 'Problemas na iluminação pública',
-    description: 'Várias lâmpadas queimadas na praça, deixando o local perigoso à noite.',
-    category: 'Segurança',
-    priority: 'Alta',
-    status: 'Resolvida',
-    reporter: {
-      name: 'Ana Costa',
-      phone: '(47) 98888-5678',
-      anonymous: false
-    },
-    location: {
-      neighborhood: 'Floresta',
-      address: 'Praça da Liberdade'
-    },
-    dateReported: '2024-09-15',
-    dateUpdated: '2024-09-20',
-    assignedTo: 'Carlos Lima - Secretaria de Serviços Urbanos',
-    comments: [
-      {
-        id: '1',
-        author: 'Carlos Lima',
-        content: 'Problema identificado. Solicitando troca das lâmpadas.',
-        date: '2024-09-16'
-      },
-      {
-        id: '2',
-        author: 'Carlos Lima',
-        content: 'Serviço concluído. Todas as lâmpadas foram substituídas.',
-        date: '2024-09-20'
-      }
-    ]
-  },
-  {
-    id: '4',
-    title: 'Ruído excessivo de construção',
-    description: 'Obra funcionando fora do horário permitido, causando perturbação.',
-    category: 'Perturbação do Sossego',
-    priority: 'Baixa',
-    status: 'Investigando',
-    reporter: {
-      name: 'Pedro Oliveira',
-      email: 'pedro@email.com',
-      anonymous: false
-    },
-    location: {
-      neighborhood: 'América',
-      address: 'Rua das Pedras, 789'
-    },
-    dateReported: '2024-09-23',
-    dateUpdated: '2024-09-24',
-    assignedTo: 'Lucas Pereira - Fiscalização',
-    comments: [
-      {
-        id: '1',
-        author: 'Lucas Pereira',
-        content: 'Investigando os horários de funcionamento da obra.',
-        date: '2024-09-24'
-      }
-    ]
-  }
-];
-
 const Reports: React.FC = () => {
-  const [reports, setReports] = useState<Report[]>(mockReports);
+  const [reports, setReports] = useState<Report[]>([]);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [filterCategory, setFilterCategory] = useState<string>('');
   const [filterPriority, setFilterPriority] = useState<string>('');
   const [newComment, setNewComment] = useState<string>('');
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
+  const [newReport, setNewReport] = useState<Partial<Report>>({
+    title: '',
+    description: '',
+    category: 'Infraestrutura',
+    priority: 'Média',
+    status: 'Nova',
+    reporter: {
+      name: '',
+      anonymous: false
+    },
+    location: {
+      neighborhood: '',
+      address: ''
+    },
+    comments: []
+  });
 
   // Filtrar denúncias
   const filteredReports = reports.filter(report => {
@@ -234,12 +137,73 @@ const Reports: React.FC = () => {
     setNewComment('');
   };
 
+  // Adicionar nova denúncia
+  const handleAddReport = () => {
+    if (!newReport.title || !newReport.description || !newReport.location?.neighborhood || !newReport.location?.address) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    const report: Report = {
+      id: Date.now().toString(),
+      title: newReport.title,
+      description: newReport.description,
+      category: newReport.category || 'Infraestrutura',
+      priority: newReport.priority || 'Média',
+      status: 'Nova',
+      reporter: {
+        name: newReport.reporter?.name || '',
+        phone: newReport.reporter?.phone,
+        email: newReport.reporter?.email,
+        anonymous: newReport.reporter?.anonymous || false
+      },
+      location: {
+        neighborhood: newReport.location?.neighborhood || '',
+        address: newReport.location?.address || '',
+        coordinates: newReport.location?.coordinates
+      },
+      dateReported: new Date().toISOString().split('T')[0],
+      dateUpdated: new Date().toISOString().split('T')[0],
+      comments: []
+    };
+
+    setReports([...reports, report]);
+    setShowAddModal(false);
+    setNewReport({
+      title: '',
+      description: '',
+      category: 'Infraestrutura',
+      priority: 'Média',
+      status: 'Nova',
+      reporter: {
+        name: '',
+        anonymous: false
+      },
+      location: {
+        neighborhood: '',
+        address: ''
+      },
+      comments: []
+    });
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Gerenciamento de Denúncias</h1>
-        <p className="text-gray-600">Sistema de acompanhamento e resolução de denúncias da comunidade</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Gerenciamento de Denúncias</h1>
+            <p className="text-gray-600">Sistema de acompanhamento e resolução de denúncias da comunidade</p>
+          </div>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center space-x-2"
+          >
+            <span>➕</span>
+            <span>Nova Denúncia</span>
+          </button>
+        </div>
       </div>
 
       {/* Estatísticas Rápidas */}
@@ -524,6 +488,197 @@ const Reports: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Modal para Adicionar Denúncia */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-gray-900">Nova Denúncia</h2>
+                <button
+                  onClick={() => setShowAddModal(false)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Título <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={newReport.title || ''}
+                  onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Ex: Buraco na pista"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Descrição <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  value={newReport.description || ''}
+                  onChange={(e) => setNewReport({ ...newReport, description: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={4}
+                  placeholder="Descreva o problema em detalhes..."
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+                  <select
+                    value={newReport.category || 'Infraestrutura'}
+                    onChange={(e) => setNewReport({ ...newReport, category: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Infraestrutura">Infraestrutura</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Meio Ambiente">Meio Ambiente</option>
+                    <option value="Perturbação do Sossego">Perturbação do Sossego</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Transporte">Transporte</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Prioridade</label>
+                  <select
+                    value={newReport.priority || 'Média'}
+                    onChange={(e) => setNewReport({ ...newReport, priority: e.target.value as Report['priority'] })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Bairro <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newReport.location?.neighborhood || ''}
+                    onChange={(e) => setNewReport({ 
+                      ...newReport, 
+                      location: { ...newReport.location!, neighborhood: e.target.value }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ex: Centro"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Endereço <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newReport.location?.address || ''}
+                    onChange={(e) => setNewReport({ 
+                      ...newReport, 
+                      location: { ...newReport.location!, address: e.target.value }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ex: Rua das Flores, 123"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={newReport.reporter?.anonymous || false}
+                    onChange={(e) => setNewReport({
+                      ...newReport,
+                      reporter: { ...newReport.reporter!, anonymous: e.target.checked }
+                    })}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium text-gray-700">Denúncia anônima</span>
+                </label>
+              </div>
+
+              {!newReport.reporter?.anonymous && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nome do Denunciante</label>
+                    <input
+                      type="text"
+                      value={newReport.reporter?.name || ''}
+                      onChange={(e) => setNewReport({
+                        ...newReport,
+                        reporter: { ...newReport.reporter!, name: e.target.value }
+                      })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Seu nome"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                      <input
+                        type="tel"
+                        value={newReport.reporter?.phone || ''}
+                        onChange={(e) => setNewReport({
+                          ...newReport,
+                          reporter: { ...newReport.reporter!, phone: e.target.value }
+                        })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="(00) 00000-0000"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                      <input
+                        type="email"
+                        value={newReport.reporter?.email || ''}
+                        onChange={(e) => setNewReport({
+                          ...newReport,
+                          reporter: { ...newReport.reporter!, email: e.target.value }
+                        })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="seu@email.com"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddReport}
+                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Cadastrar Denúncia
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
