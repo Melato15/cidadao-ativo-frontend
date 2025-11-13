@@ -1,5 +1,5 @@
 import React from 'react';
-import Reports from '../../components/Reports';
+import ReportsIntegrated from '../../components/ReportsIntegrated';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 
@@ -10,7 +10,7 @@ const ReportsPage: React.FC = () => {
       <Sidebar />
       <main className="ml-64 pt-16">
         <div className="p-6">
-          <Reports />
+          <ReportsIntegrated />
         </div>
       </main>
     </div>

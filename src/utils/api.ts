@@ -193,3 +193,135 @@ export const votesApi = {
     return response.json();
   },
 };
+
+// API de Reports (Denúncias)
+export interface Report {
+  id: number;
+  title: string;
+  description: string;
+  category:
+    | "infrastructure"
+    | "education"
+    | "health"
+    | "security"
+    | "environment"
+    | "culture"
+    | "sports"
+    | "transportation"
+    | "other";
+  status:
+    | "draft"
+    | "active"
+    | "voting"
+    | "approved"
+    | "rejected"
+    | "implemented";
+  priority: "low" | "medium" | "high" | "urgent";
+  location?: string;
+  authorId: string;
+  author?: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateReportDto {
+  title: string;
+  description: string;
+  category:
+    | "infrastructure"
+    | "education"
+    | "health"
+    | "security"
+    | "environment"
+    | "culture"
+    | "sports"
+    | "transportation"
+    | "other";
+  status:
+    | "draft"
+    | "active"
+    | "voting"
+    | "approved"
+    | "rejected"
+    | "implemented";
+  priority: "low" | "medium" | "high" | "urgent";
+  location?: string;
+}
+
+export const reportsApi = {
+  async getAll(): Promise<Report[]> {
+    const response = await fetch(`${API_BASE_URL}/reports`);
+    if (!response.ok) {
+      throw new Error("Falha ao carregar denúncias");
+    }
+    return response.json();
+  },
+
+  async getById(id: number): Promise<Report> {
+    const response = await fetch(`${API_BASE_URL}/reports/${id}`);
+    if (!response.ok) {
+      throw new Error("Falha ao carregar denúncia");
+    }
+    return response.json();
+  },
+
+  async getByAuthor(authorId: string): Promise<Report[]> {
+    const response = await fetch(`${API_BASE_URL}/reports/author/${authorId}`);
+    if (!response.ok) {
+      throw new Error("Falha ao carregar denúncias do autor");
+    }
+    return response.json();
+  },
+
+  async create(data: CreateReportDto, token: string): Promise<Report> {
+    const response = await fetch(`${API_BASE_URL}/reports`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Falha ao criar denúncia");
+    }
+    return response.json();
+  },
+
+  async update(
+    id: number,
+    data: Partial<CreateReportDto>,
+    token: string
+  ): Promise<Report> {
+    const response = await fetch(`${API_BASE_URL}/reports/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Falha ao atualizar denúncia");
+    }
+    return response.json();
+  },
+
+  async delete(id: number, token: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/reports/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Falha ao deletar denúncia");
+    }
+  },
+};
