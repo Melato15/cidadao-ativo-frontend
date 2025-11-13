@@ -13,9 +13,11 @@ interface Project {
 
 interface ProjectCardProps {
   project: Project;
+  onVote?: (projectId: string | number, type: 'up' | 'down') => void;
+  userVote?: 'up' | 'down' | null;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onVote, userVote }) => {
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'Em Votação':
@@ -65,11 +67,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       {/* Action Buttons and Counters */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <button className="flex items-center space-x-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors">
+          <button 
+            onClick={() => onVote && onVote(project.id, 'up')}
+            className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              userVote === 'up' 
+                ? 'bg-green-700 text-white' 
+                : 'bg-green-600 text-white hover:bg-green-700'
+            }`}
+            disabled={!onVote}
+          >
             <span>👍</span>
             <span>Apoiar</span>
           </button>
-          <button className="flex items-center space-x-1 px-3 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors">
+          <button 
+            onClick={() => onVote && onVote(project.id, 'down')}
+            className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              userVote === 'down' 
+                ? 'bg-red-700 text-white' 
+                : 'bg-red-600 text-white hover:bg-red-700'
+            }`}
+            disabled={!onVote}
+          >
             <span>👎</span>
             <span>Rejeitar</span>
           </button>

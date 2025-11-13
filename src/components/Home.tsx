@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardStats from '@/components/DashboardStats';
 import ProjectCard from '@/components/ProjectCard';
 import CreateProjectModal from '@/components/CreateProjectModal';
-import { projectsApi, Project, CreateProjectDto } from '@/utils/api';
+import { projectsApi, Project, CreateProjectDto, votesApi, Vote } from '@/utils/api';
 
 const statusMap: Record<string, string> = {
 	draft: 'Rascunho',
@@ -20,6 +20,7 @@ export default function Home() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [userVotes, setUserVotes] = useState<Record<string, 'up' | 'down'>>({});
 
 	const loadProjects = async () => {
 		try {
@@ -27,10 +28,30 @@ export default function Home() {
 			setError('');
 			const data = await projectsApi.getAll();
 			setProjects(data);
+			
+			// Carregar votos do usuário se estiver logado
+			const token = localStorage.getItem('access_token');
+			if (token) {
+				await loadUserVotes(token);
+			}
 		} catch (err: any) {
 			setError(err.message || 'Erro ao carregar projetos');
 		} finally {
 			setIsLoading(false);
+		}
+	};
+
+	const loadUserVotes = async (token: string) => {
+		try {
+			const votes = await votesApi.getMyVotes(token);
+			const votesMap: Record<string, 'up' | 'down'> = {};
+			votes.forEach((vote: Vote) => {
+				votesMap[vote.projectId] = vote.type;
+			});
+			setUserVotes(votesMap);
+		} catch (err) {
+			// Ignorar erros ao carregar votos (usuário pode não ter votado ainda)
+			console.error('Erro ao carregar votos:', err);
 		}
 	};
 
@@ -46,6 +67,27 @@ export default function Home() {
 
 		await projectsApi.create(data, token);
 		await loadProjects(); // Recarrega a lista de projetos
+	};
+
+	const handleVote = async (projectId: string | number, type: 'up' | 'down') => {
+		const token = localStorage.getItem('access_token');
+		if (!token) {
+			setError('Você precisa estar logado para votar');
+			return;
+		}
+
+		try {
+			setError('');
+			await votesApi.vote(String(projectId), { type }, token);
+			
+			// Atualizar o voto local
+			setUserVotes(prev => ({ ...prev, [projectId]: type }));
+			
+			// Recarregar projetos para atualizar contadores
+			await loadProjects();
+		} catch (err: any) {
+			setError(err.message || 'Erro ao votar');
+		}
 	};
 
 	// Mapeia os projetos para o formato esperado pelo ProjectCard
@@ -133,7 +175,12 @@ export default function Home() {
 				) : (
 					<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
 						{mappedProjects.map((project) => (
-							<ProjectCard key={project.id} project={project} />
+							<ProjectCard 
+								key={project.id} 
+								project={project}
+								onVote={handleVote}
+								userVote={userVotes[project.id] || null}
+							/>
 						))}
 					</div>
 				)}
