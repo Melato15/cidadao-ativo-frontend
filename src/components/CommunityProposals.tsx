@@ -18,57 +18,8 @@ interface CommunityProposal {
   category: 'Infraestrutura' | 'Meio Ambiente' | 'Segurança' | 'Educação' | 'Saúde' | 'Cultura' | 'Transporte' | 'Outros';
 }
 
-// Mock data for community proposals
-const mockProposals: CommunityProposal[] = [
-  {
-    id: 1,
-    title: 'Parquinho Infantil na Praça da Vila',
-    description: 'Proposta para instalação de um parquinho infantil na Praça da Vila Nova, com brinquedos seguros e área cercada para proteção das crianças. A comunidade tem muitas famílias jovens e sentimos falta de um espaço dedicado aos pequenos.',
-    author: 'Marina Santos',
-    neighborhood: 'Vila Nova',
-    createdAt: '2024-03-15',
-    category: 'Infraestrutura'
-  },
-  {
-    id: 2,
-    title: 'Horta Comunitária no Jardim das Flores',
-    description: 'Criação de uma horta comunitária no terreno baldio da Rua das Acácias. O projeto incluiria canteiros suspensos, sistema de irrigação e compostagem, promovendo a alimentação saudável e o convívio social entre os moradores.',
-    author: 'Carlos Oliveira',
-    neighborhood: 'Jardim das Flores',
-    createdAt: '2024-03-12',
-    category: 'Meio Ambiente'
-  },
-  {
-    id: 3,
-    title: 'Melhor Iluminação na Rua Principal',
-    description: 'A Rua Principal do bairro Centro está com várias lâmpadas queimadas, criando pontos escuros que comprometem a segurança dos pedestres, especialmente à noite. Solicitamos a manutenção e melhoria da iluminação pública.',
-    author: 'Ana Paula Silva',
-    neighborhood: 'Centro',
-    createdAt: '2024-03-10',
-    category: 'Segurança'
-  },
-  {
-    id: 4,
-    title: 'Aulas de Informática para Idosos',
-    description: 'Proposta para criação de um programa de aulas básicas de informática voltado para a terceira idade, utilizando o espaço do centro comunitário. O objetivo é promover a inclusão digital e melhorar a qualidade de vida dos idosos.',
-    author: 'Roberto Ferreira',
-    neighborhood: 'Zona Sul',
-    createdAt: '2024-03-08',
-    category: 'Educação'
-  },
-  {
-    id: 5,
-    title: 'Festival Cultural Mensal',
-    description: 'Organização de um festival cultural mensal na praça central, com apresentações de música local, dança, teatro e exposição de artesanato. O evento fortaleceria a cultura local e proporcionaria entretenimento gratuito para toda a família.',
-    author: 'Lucia Pereira',
-    neighborhood: 'Centro',
-    createdAt: '2024-03-05',
-    category: 'Cultura'
-  }
-];
-
 const CommunityProposals: React.FC = () => {
-  const [proposals, setProposals] = useState<CommunityProposal[]>(mockProposals);
+  const [proposals, setProposals] = useState<CommunityProposal[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCategory, setFilterCategory] = useState<string>('Todas');
   const [filterNeighborhood, setFilterNeighborhood] = useState<string>('Todos');
