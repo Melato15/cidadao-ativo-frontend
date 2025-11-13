@@ -6,6 +6,8 @@ import Button from '@/components/Button';
 import ProposalCard from '@/components/ProposalCard';
 import AddProposal from '@/components/AddProposal';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 interface CommunityProposal {
   id: number;
   title: string;
@@ -76,7 +78,7 @@ const CommunityProposals: React.FC = () => {
   useEffect(() => {
     const fetchProposals = async () => {
       try {
-        const response = await fetch('http://localhost:3001/community-proposals');
+        const response = await fetch(`${API_BASE_URL}/community-proposals`);
         if (response.ok) {
           const data = await response.json();
           const mappedProposals: CommunityProposal[] = data.map((project: any) => ({
@@ -160,7 +162,7 @@ const CommunityProposals: React.FC = () => {
         'Outros': 'other'
       };
 
-      const response = await fetch('http://localhost:3001/community-proposals', {
+      const response = await fetch(`${API_BASE_URL}/community-proposals`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -5,6 +5,8 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { formatCPF, unformatCPF, isValidCPF, isEmpty } from '../utils/validation';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 interface FormData {
   cpf: string;
   password: string;
@@ -90,7 +92,7 @@ const Login: React.FC = () => {
         password: formData.password
       };
 
-      const response = await fetch('http://localhost:3001/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

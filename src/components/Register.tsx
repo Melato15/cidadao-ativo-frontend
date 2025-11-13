@@ -14,6 +14,8 @@ import {
   isValidFullName 
 } from '../utils/validation';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 interface FormData {
   fullName: string;
   cpf: string;
@@ -126,7 +128,7 @@ const Register: React.FC = () => {
         role: 'citizen'
       };
 
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
