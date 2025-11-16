@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { reportsApi, Report as ApiReport, CreateReportDto } from '../utils/api';
+import { useFilters } from '@/contexts/FilterContext';
 
 // Mapeamento de categorias
 const categoryMap: { [key: string]: ApiReport['category'] } = {
@@ -71,6 +72,9 @@ const ReportsIntegrated: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   
+  // Obter filtros do contexto da sidebar
+  const { neighborhood: globalNeighborhood, category: globalCategory, status: globalStatus } = useFilters();
+  
   const [newReport, setNewReport] = useState<{
     title: string;
     description: string;
@@ -108,11 +112,17 @@ const ReportsIntegrated: React.FC = () => {
 
   // Filtrar denúncias
   const filteredReports = reports.filter(report => {
+    // Filtros locais da página
     const matchStatus = filterStatus === '' || statusMapReverse[report.status] === filterStatus;
     const matchCategory = filterCategory === '' || categoryMapReverse[report.category] === filterCategory;
     const matchPriority = filterPriority === '' || priorityMapReverse[report.priority] === filterPriority;
     
-    return matchStatus && matchCategory && matchPriority;
+    // Filtros globais da sidebar
+    const sidebarCategoryMatch = globalCategory === 'Todas as categorias' || categoryMapReverse[report.category] === globalCategory;
+    const sidebarStatusMatch = globalStatus === 'Todos os status' || statusMapReverse[report.status] === globalStatus;
+    const sidebarNeighborhoodMatch = globalNeighborhood === 'Todos os Bairros' || report.location === globalNeighborhood;
+    
+    return matchStatus && matchCategory && matchPriority && sidebarCategoryMatch && sidebarStatusMatch && sidebarNeighborhoodMatch;
   });
 
   // Obter cor da prioridade

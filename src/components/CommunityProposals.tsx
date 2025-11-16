@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Button from '@/components/Button';
 import ProposalCard from '@/components/ProposalCard';
 import AddProposal from '@/components/AddProposal';
+import { useFilters } from '@/contexts/FilterContext';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
@@ -24,6 +25,9 @@ const CommunityProposals: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState<string>('Todas');
   const [filterNeighborhood, setFilterNeighborhood] = useState<string>('Todos');
   const [loading, setLoading] = useState(true);
+  
+  // Obter filtros do contexto
+  const { neighborhood: globalNeighborhood, category: globalCategory } = useFilters();
 
   // Carregar propostas do backend ao montar o componente
   useEffect(() => {
@@ -152,9 +156,15 @@ const CommunityProposals: React.FC = () => {
   };
 
   const filteredProposals = proposals.filter(proposal => {
+    // Filtros da sidebar (globais)
+    const sidebarCategoryMatch = globalCategory === 'Todas as categorias' || proposal.category === globalCategory;
+    const sidebarNeighborhoodMatch = globalNeighborhood === 'Todos os Bairros' || proposal.neighborhood === globalNeighborhood;
+    
+    // Filtros locais da página
     const categoryMatch = filterCategory === 'Todas' || proposal.category === filterCategory;
     const neighborhoodMatch = filterNeighborhood === 'Todos' || proposal.neighborhood === filterNeighborhood;
-    return categoryMatch && neighborhoodMatch;
+    
+    return sidebarCategoryMatch && sidebarNeighborhoodMatch && categoryMatch && neighborhoodMatch;
   });
 
   const getStats = () => {

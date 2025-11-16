@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import { FilterProvider } from '@/contexts/FilterContext';
 
 export const metadata: Metadata = {
   title: 'Cidadão Ativo',
@@ -30,7 +31,11 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body>{children}</body>
+      <body>
+        <FilterProvider>
+          {children}
+        </FilterProvider>
+      </body>
     </html>
   );
 }
