@@ -29,6 +29,14 @@ const CommunityProposals: React.FC = () => {
   // Obter filtros do contexto
   const { neighborhood: globalNeighborhood, category: globalCategory } = useFilters();
 
+  // Debug: Log dos filtros quando mudarem
+  useEffect(() => {
+    console.log('Filtros da Sidebar:', {
+      globalNeighborhood,
+      globalCategory
+    });
+  }, [globalNeighborhood, globalCategory]);
+
   // Carregar propostas do backend ao montar o componente
   useEffect(() => {
     const fetchProposals = async () => {
@@ -163,6 +171,20 @@ const CommunityProposals: React.FC = () => {
     // Filtros locais da página
     const categoryMatch = filterCategory === 'Todas' || proposal.category === filterCategory;
     const neighborhoodMatch = filterNeighborhood === 'Todos' || proposal.neighborhood === filterNeighborhood;
+    
+    // Debug (remover depois)
+    if (globalCategory !== 'Todas as categorias' || globalNeighborhood !== 'Todos os Bairros') {
+      console.log('Filtrando proposta:', proposal.title, {
+        sidebarCategoryMatch,
+        sidebarNeighborhoodMatch,
+        categoryMatch,
+        neighborhoodMatch,
+        proposalCategory: proposal.category,
+        globalCategory,
+        proposalNeighborhood: proposal.neighborhood,
+        globalNeighborhood
+      });
+    }
     
     return sidebarCategoryMatch && sidebarNeighborhoodMatch && categoryMatch && neighborhoodMatch;
   });

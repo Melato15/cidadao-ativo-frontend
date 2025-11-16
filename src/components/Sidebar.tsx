@@ -38,9 +38,16 @@ const Sidebar: React.FC = () => {
 
         {/* Filters Section */}
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-            Filtros
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+              Filtros
+            </h3>
+            {(neighborhood !== 'Todos os Bairros' || category !== 'Todas as categorias' || status !== 'Todos os status') && (
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                Ativos
+              </span>
+            )}
+          </div>
           
           {/* Bairro Filter */}
           <div>
@@ -111,11 +118,13 @@ const Sidebar: React.FC = () => {
             >
               <option>Todas as categorias</option>
               <option>Infraestrutura</option>
-              <option>Segurança</option>
-              <option>Saúde</option>
-              <option>Educação</option>
               <option>Meio Ambiente</option>
+              <option>Segurança</option>
+              <option>Educação</option>
+              <option>Saúde</option>
+              <option>Cultura</option>
               <option>Transporte</option>
+              <option>Outros</option>
             </select>
           </div>
 
@@ -130,12 +139,12 @@ const Sidebar: React.FC = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option>Todos os status</option>
+              <option>Rascunho</option>
+              <option>Ativa</option>
               <option>Em Votação</option>
-              <option>Em Análise</option>
-              <option>Aprovado</option>
-              <option>Rejeitado</option>
-              <option>Em Execução</option>
-              <option>Concluído</option>
+              <option>Aprovada</option>
+              <option>Rejeitada</option>
+              <option>Implementada</option>
             </select>
           </div>
 
