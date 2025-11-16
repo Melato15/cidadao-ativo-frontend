@@ -110,7 +110,7 @@ const CommunityProposals: React.FC = () => {
         'Saúde': 'health',
         'Cultura': 'culture',
         'Transporte': 'transportation',
-        'Diversidades': 'diversity',
+        'Diversidade': 'diversity',
         'Outros': 'other'
       };
 
