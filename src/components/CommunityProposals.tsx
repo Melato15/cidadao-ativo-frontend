@@ -110,7 +110,6 @@ const CommunityProposals: React.FC = () => {
         'Saúde': 'health',
         'Cultura': 'culture',
         'Transporte': 'transportation',
-        'Diversidade': 'diversity',
         'Outros': 'other'
       };
 
@@ -235,7 +234,7 @@ const CommunityProposals: React.FC = () => {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-green-900">Categoria Mais Popular</p>
+              <p className="text-sm font-medium text-green-900">Categoria Mais Polar</p>
               <p className="text-lg font-bold text-green-600">{stats.topCategory}</p>
             </div>
           </div>

@@ -49,6 +49,7 @@ const AddProposal: React.FC<AddProposalProps> = ({ onSubmit, onCancel }) => {
     'Saúde',
     'Cultura',
     'Transporte',
+    'Diversidade',
     'Outros'
   ];
 
