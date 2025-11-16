@@ -266,7 +266,7 @@ const CommunityProposals: React.FC = () => {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-green-900">Categoria Mais Polar</p>
+              <p className="text-sm font-medium text-green-900">Categoria Mais Popular</p>
               <p className="text-lg font-bold text-green-600">{stats.topCategory}</p>
             </div>
           </div>
@@ -297,7 +297,7 @@ const CommunityProposals: React.FC = () => {
         />
       )}
 
-      {/* Filters */}
+      {/* Filters
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
         <h3 className="text-sm font-medium text-gray-900 mb-3">Filtros</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -337,7 +337,7 @@ const CommunityProposals: React.FC = () => {
             </select>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Results Counter */}
       <div className="flex items-center justify-between">

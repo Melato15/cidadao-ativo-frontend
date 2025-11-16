@@ -8,7 +8,7 @@ export default function PropostasPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <Sidebar />
-      <FilterDebug />
+      {/* <FilterDebug /> */}
       <main className="ml-64 pt-16">
         <div className="p-6">
           <CommunityProposals />
