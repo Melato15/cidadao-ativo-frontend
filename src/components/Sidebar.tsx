@@ -4,7 +4,12 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import { useFilters } from '@/contexts/FilterContext';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
   const pathname = usePathname();
   const { neighborhood, category, setNeighborhood, setCategory, resetFilters } = useFilters();
   
@@ -16,7 +21,11 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="fixed left-0 top-16 bottom-0 w-64 bg-white shadow-lg z-40 overflow-y-auto">
+    <aside 
+      className={`fixed left-0 top-16 bottom-0 w-64 bg-white shadow-lg z-40 overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
+    >
       <div className="p-4">
         {/* Navigation Menu */}
         <nav className="space-y-2 mb-8">
