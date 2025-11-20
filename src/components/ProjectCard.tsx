@@ -83,8 +83,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onVote, userVote }) 
             onClick={() => onVote && onVote(project.id, 'down')}
             className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
               userVote === 'down' 
-                ? 'bg-blue-700 text-white' 
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-red-700 text-white' 
+                : 'bg-red-600 text-white hover:bg-red-700'
             }`}
             disabled={!onVote}
           >
