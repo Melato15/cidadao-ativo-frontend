@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Tabela de Propostas Pendentes */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      {/* <div className="bg-white rounded-lg shadow-sm p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Propostas Pendentes de Análise
         </h3>
@@ -144,7 +144,6 @@ const Dashboard: React.FC = () => {
                   127 votos
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <button className="text-blue-600 hover:text-blue-900 mr-4">Analisar</button>
                   <button className="text-green-600 hover:text-green-900 mr-4">Aprovar</button>
                   <button className="text-red-600 hover:text-red-900">Rejeitar</button>
                 </td>
@@ -196,7 +195,7 @@ const Dashboard: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
 
       {/* Estatísticas Adicionais */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -206,11 +205,11 @@ const Dashboard: React.FC = () => {
           <p className="text-sm text-gray-500 mt-1">Todas as propostas submetidas</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        {/* <div className="bg-white rounded-lg shadow-sm p-6">
           <h4 className="text-sm font-medium text-gray-500 mb-2">Tempo Médio de Análise</h4>
           <p className="text-3xl font-bold text-orange-600">7 dias</p>
           <p className="text-sm text-gray-500 mt-1">Média de aprovação</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
