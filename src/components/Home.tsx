@@ -6,15 +6,6 @@ import ProjectCard from '@/components/ProjectCard';
 import CreateProjectModal from '@/components/CreateProjectModal';
 import { projectsApi, Project, CreateProjectDto, votesApi, Vote } from '@/utils/api';
 
-const statusMap: Record<string, string> = {
-	draft: 'Rascunho',
-	active: 'Ativo',
-	voting: 'Em Votação',
-	approved: 'Aprovado',
-	rejected: 'Rejeitado',
-	implemented: 'Implementado',
-};
-
 export default function Home() {
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -95,7 +86,6 @@ export default function Home() {
 		id: project.id,
 		title: project.title,
 		description: project.description,
-		status: statusMap[project.status] || project.status,
 		neighborhood: project.neighborhood,
 		councilMember: project.author?.name || 'Autor desconhecido',
 		votes: project.votesFor,
@@ -105,7 +95,6 @@ export default function Home() {
 	// Calcula estatísticas
 	const stats = {
 		totalVotes: projects.reduce((acc, p) => acc + p.votesFor + p.votesAgainst, 0),
-		activeProjects: projects.filter((p) => p.status === 'active' || p.status === 'voting').length,
 		participationRate: projects.length > 0 ? Math.round((projects.filter((p) => p.votesFor > 0 || p.votesAgainst > 0).length / projects.length) * 100) : 0,
 	};
 

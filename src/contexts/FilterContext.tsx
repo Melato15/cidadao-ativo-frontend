@@ -5,10 +5,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface FilterContextType {
   neighborhood: string;
   category: string;
-  status: string;
   setNeighborhood: (value: string) => void;
   setCategory: (value: string) => void;
-  setStatus: (value: string) => void;
   resetFilters: () => void;
 }
 
@@ -29,12 +27,10 @@ interface FilterProviderProps {
 export const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
   const [neighborhood, setNeighborhood] = useState<string>('Todos os Bairros');
   const [category, setCategory] = useState<string>('Todas as categorias');
-  const [status, setStatus] = useState<string>('Todos os status');
 
   const resetFilters = () => {
     setNeighborhood('Todos os Bairros');
     setCategory('Todas as categorias');
-    setStatus('Todos os status');
   };
 
   return (
@@ -42,10 +38,8 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
       value={{
         neighborhood,
         category,
-        status,
         setNeighborhood,
         setCategory,
-        setStatus,
         resetFilters,
       }}
     >

@@ -5,7 +5,6 @@ export interface Project {
   title: string;
   description: string;
   category: string;
-  status: string;
   neighborhood: string;
   votesFor: number;
   votesAgainst: number;
@@ -24,7 +23,6 @@ export interface CreateProjectDto {
   description: string;
   category: string;
   neighborhood: string;
-  status?: string;
 }
 
 export const projectsApi = {

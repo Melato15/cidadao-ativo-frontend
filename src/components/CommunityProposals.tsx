@@ -136,7 +136,6 @@ const CommunityProposals: React.FC = () => {
           description: newProposalData.description,
           category: categoryMap[newProposalData.category],
           neighborhood: newProposalData.neighborhood,
-          status: 'active'
         }),
       });
 

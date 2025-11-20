@@ -2,7 +2,6 @@ import React from 'react';
 
 interface StatsData {
   totalVotes: number;
-  activeProjects: number;
   participationRate: number;
 }
 
@@ -30,14 +29,6 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
       bgColor: 'bg-blue-50',
     },
     {
-      id: 'active-projects',
-      title: 'Projetos Ativos',
-      value: stats.activeProjects.toString(),
-      icon: '📋',
-      iconColor: 'text-green-600',
-      bgColor: 'bg-green-50',
-    },
-    {
       id: 'participation-rate',
       title: 'Participação',
       value: `${stats.participationRate}%`,
@@ -48,7 +39,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" role="region" aria-label="Estatísticas do dashboard">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" role="region" aria-label="Estatísticas do dashboard">
       {statCards.map((card) => (
         <div
           key={card.id}

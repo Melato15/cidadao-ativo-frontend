@@ -17,14 +17,6 @@ import {
 } from 'recharts';
 
 // Dados mock para demonstração
-const proposalStatusData = [
-  { name: 'Pendentes de Análise', count: 25, color: '#FFA500' },
-  { name: 'Aprovados', count: 45, color: '#4CAF50' },
-  { name: 'Rejeitados', count: 12, color: '#F44336' },
-  { name: 'Em Execução', count: 18, color: '#2196F3' },
-  { name: 'Concluídos', count: 35, color: '#9C27B0' }
-];
-
 const monthlyProposalsData = [
   { month: 'Jan', propostas: 12, aprovadas: 8 },
   { month: 'Fev', propostas: 19, aprovadas: 14 },
@@ -46,7 +38,7 @@ const categoryData = [
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
 
 const Dashboard: React.FC = () => {
-  const totalProposals = proposalStatusData.reduce((sum, item) => sum + item.count, 0);
+  const totalProposals = categoryData.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <div className="space-y-6">
@@ -56,56 +48,10 @@ const Dashboard: React.FC = () => {
         <p className="text-gray-600">Visão geral das propostas da comunidade</p>
       </div>
 
-      {/* Cards de Resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {proposalStatusData.map((item, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div 
-                  className="w-4 h-4 rounded-full" 
-                  style={{ backgroundColor: item.color }}
-                ></div>
-              </div>
-              <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-500">{item.name}</p>
-                <p className="text-2xl font-bold text-gray-900">{item.count}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Gráficos */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Gráfico de Pizza - Status das Propostas */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Distribuição por Status
-          </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={proposalStatusData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name}: ${((percent as number) * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="count"
-              >
-                {proposalStatusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Gráfico de Barras - Propostas por Categoria */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 lg:col-span-2">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Propostas por Categoria
           </h3>
@@ -258,14 +204,6 @@ const Dashboard: React.FC = () => {
           <h4 className="text-sm font-medium text-gray-500 mb-2">Total de Propostas</h4>
           <p className="text-3xl font-bold text-blue-600">{totalProposals}</p>
           <p className="text-sm text-gray-500 mt-1">Todas as propostas submetidas</p>
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h4 className="text-sm font-medium text-gray-500 mb-2">Taxa de Aprovação</h4>
-          <p className="text-3xl font-bold text-green-600">
-            {Math.round((proposalStatusData.find(item => item.name === 'Aprovados')?.count || 0) / totalProposals * 100)}%
-          </p>
-          <p className="text-sm text-gray-500 mt-1">Propostas aprovadas</p>
         </div>
         
         <div className="bg-white rounded-lg shadow-sm p-6">

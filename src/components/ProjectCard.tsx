@@ -4,7 +4,6 @@ interface Project {
   id: number | string;
   title: string;
   description: string;
-  status: 'Em Votação' | 'Em Análise' | 'Aprovado' | 'Rejeitado' | 'Em Execução' | 'Concluído' | string;
   neighborhood: string;
   councilMember: string;
   votes: number;
@@ -18,36 +17,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onVote, userVote }) => {
-  const getStatusBadgeColor = (status: string) => {
-    switch (status) {
-      case 'Em Votação':
-        return 'bg-blue-100 text-blue-800';
-      case 'Em Análise':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'Aprovado':
-        return 'bg-green-100 text-green-800';
-      case 'Rejeitado':
-        return 'bg-red-100 text-red-800';
-      case 'Em Execução':
-        return 'bg-purple-100 text-purple-800';
-      case 'Concluído':
-        return 'bg-gray-100 text-gray-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-      {/* Header with Status and Neighborhood */}
-      <div className="flex items-center justify-between mb-4">
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeColor(
-            project.status
-          )}`}
-        >
-          {project.status}
-        </span>
+      {/* Header with Neighborhood */}
+      <div className="flex items-center justify-end mb-4">
         <span className="text-sm text-gray-500 bg-gray-50 px-2 py-1 rounded">
           {project.neighborhood}
         </span>

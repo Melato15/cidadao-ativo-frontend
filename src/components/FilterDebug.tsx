@@ -8,7 +8,7 @@ import { useFilters } from '@/contexts/FilterContext';
  * Adicione este componente em qualquer página para ver os filtros em tempo real
  */
 const FilterDebug: React.FC = () => {
-  const { neighborhood, category, status } = useFilters();
+  const { neighborhood, category } = useFilters();
 
   return (
     <div className="fixed bottom-4 right-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg text-xs z-50 max-w-xs">
@@ -27,12 +27,6 @@ const FilterDebug: React.FC = () => {
           <span className="text-gray-400">Categoria:</span>{' '}
           <span className={category !== 'Todas as categorias' ? 'text-yellow-400 font-semibold' : ''}>
             {category}
-          </span>
-        </div>
-        <div>
-          <span className="text-gray-400">Status:</span>{' '}
-          <span className={status !== 'Todos os status' ? 'text-yellow-400 font-semibold' : ''}>
-            {status}
           </span>
         </div>
       </div>

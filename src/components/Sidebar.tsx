@@ -6,7 +6,7 @@ import { useFilters } from '@/contexts/FilterContext';
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
-  const { neighborhood, category, status, setNeighborhood, setCategory, setStatus, resetFilters } = useFilters();
+  const { neighborhood, category, setNeighborhood, setCategory, resetFilters } = useFilters();
   
   const menuItems = [
     { icon: '🏠', label: 'Início', url: '/home' },
@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
               Filtros
             </h3>
-            {(neighborhood !== 'Todos os Bairros' || category !== 'Todas as categorias' || status !== 'Todos os status') && (
+            {(neighborhood !== 'Todos os Bairros' || category !== 'Todas as categorias') && (
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                 Ativos
               </span>
@@ -128,28 +128,8 @@ const Sidebar: React.FC = () => {
             </select>
           </div>
 
-          {/* Status Filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Status
-            </label>
-            <select 
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option>Todos os status</option>
-              <option>Rascunho</option>
-              <option>Ativa</option>
-              <option>Em Votação</option>
-              <option>Aprovada</option>
-              <option>Rejeitada</option>
-              <option>Implementada</option>
-            </select>
-          </div>
-
           {/* Clear Filters Button */}
-          {(neighborhood !== 'Todos os Bairros' || category !== 'Todas as categorias' || status !== 'Todos os status') && (
+          {(neighborhood !== 'Todos os Bairros' || category !== 'Todas as categorias') && (
             <button
               onClick={resetFilters}
               className="w-full mt-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors flex items-center justify-center gap-2"

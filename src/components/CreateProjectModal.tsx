@@ -31,7 +31,6 @@ export default function CreateProjectModal({
     description: '',
     category: 'infrastructure',
     neighborhood: '',
-    status: 'draft',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -58,7 +57,6 @@ export default function CreateProjectModal({
         description: '',
         category: 'infrastructure',
         neighborhood: '',
-        status: 'draft',
       });
       onClose();
     } catch (err: any) {
