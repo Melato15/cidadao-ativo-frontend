@@ -73,16 +73,15 @@ const ReportsIntegrated: React.FC = () => {
   const [error, setError] = useState<string>('');
   
   // Obter filtros do contexto da sidebar
-  const { neighborhood: globalNeighborhood, category: globalCategory, status: globalStatus } = useFilters();
+  const { neighborhood: globalNeighborhood, category: globalCategory} = useFilters();
 
   // Debug: Log dos filtros quando mudarem
   useEffect(() => {
     console.log('Filtros da Sidebar (Reports):', {
       globalNeighborhood,
       globalCategory,
-      globalStatus
     });
-  }, [globalNeighborhood, globalCategory, globalStatus]);
+  }, [globalNeighborhood, globalCategory]);
   
   const [newReport, setNewReport] = useState<{
     title: string;
@@ -128,28 +127,25 @@ const ReportsIntegrated: React.FC = () => {
     
     // Filtros globais da sidebar
     const sidebarCategoryMatch = globalCategory === 'Todas as categorias' || categoryMapReverse[report.category] === globalCategory;
-    const sidebarStatusMatch = globalStatus === 'Todos os status' || statusMapReverse[report.status] === globalStatus;
     const sidebarNeighborhoodMatch = globalNeighborhood === 'Todos os Bairros' || report.location === globalNeighborhood;
     
     // Debug (remover depois)
-    if (globalCategory !== 'Todas as categorias' || globalStatus !== 'Todos os status' || globalNeighborhood !== 'Todos os Bairros') {
+    if (globalCategory !== 'Todas as categorias' || globalNeighborhood !== 'Todos os Bairros') {
       console.log('Filtrando denúncia:', report.title, {
         matchStatus,
         matchCategory,
         matchPriority,
         sidebarCategoryMatch,
-        sidebarStatusMatch,
         sidebarNeighborhoodMatch,
         reportCategory: categoryMapReverse[report.category],
         globalCategory,
         reportStatus: statusMapReverse[report.status],
-        globalStatus,
         reportLocation: report.location,
         globalNeighborhood
       });
     }
     
-    return matchStatus && matchCategory && matchPriority && sidebarCategoryMatch && sidebarStatusMatch && sidebarNeighborhoodMatch;
+    return matchStatus && matchCategory && matchPriority && sidebarCategoryMatch && sidebarNeighborhoodMatch;
   });
 
   // Obter cor da prioridade
