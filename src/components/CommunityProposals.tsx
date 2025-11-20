@@ -207,23 +207,23 @@ const CommunityProposals: React.FC = () => {
   const stats = getStats();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Breadcrumb/Navigation */}
-      <nav className="flex items-center space-x-2 text-sm text-gray-600">
+      <nav className="flex items-center space-x-2 text-xs md:text-sm text-gray-600">
         <Link href="/" className="hover:text-blue-600 transition-colors">
           Início
         </Link>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
         <span className="text-gray-900 font-medium">Propostas da Comunidade</span>
       </nav>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Propostas da Comunidade</h2>
-          <p className="text-gray-600 mt-1">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">Propostas da Comunidade</h2>
+          <p className="text-sm md:text-base text-gray-600 mt-1">
             Compartilhe suas ideias para melhorar o bairro
           </p>
         </div>
@@ -231,9 +231,9 @@ const CommunityProposals: React.FC = () => {
           <Button
             variant="primary"
             onClick={() => setShowAddForm(true)}
-            className="flex items-center gap-2"
+            className="w-full sm:w-auto flex items-center justify-center gap-2"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
             Nova Proposta
@@ -242,45 +242,45 @@ const CommunityProposals: React.FC = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-blue-50 rounded-lg p-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+        <div className="bg-blue-50 rounded-lg p-3 md:p-4">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-blue-900">Total de Propostas</p>
-              <p className="text-2xl font-bold text-blue-600">{stats.totalProposals}</p>
+            <div className="ml-3 md:ml-4">
+              <p className="text-xs md:text-sm font-medium text-blue-900">Total de Propostas</p>
+              <p className="text-xl md:text-2xl font-bold text-blue-600">{stats.totalProposals}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-green-50 rounded-lg p-4">
+        <div className="bg-green-50 rounded-lg p-3 md:p-4">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-green-900">Categoria Mais Popular</p>
-              <p className="text-lg font-bold text-green-600">{stats.topCategory}</p>
+            <div className="ml-3 md:ml-4">
+              <p className="text-xs md:text-sm font-medium text-green-900">Categoria Mais Popular</p>
+              <p className="text-base md:text-lg font-bold text-green-600">{stats.topCategory}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-purple-50 rounded-lg p-4">
+        <div className="bg-purple-50 rounded-lg p-3 md:p-4">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-purple-900">Bairros Ativos</p>
-              <p className="text-2xl font-bold text-purple-600">
+            <div className="ml-3 md:ml-4">
+              <p className="text-xs md:text-sm font-medium text-purple-900">Bairros Ativos</p>
+              <p className="text-xl md:text-2xl font-bold text-purple-600">
                 {new Set(proposals.map(p => p.neighborhood)).size}
               </p>
             </div>
@@ -358,20 +358,20 @@ const CommunityProposals: React.FC = () => {
 
       {/* Proposals Grid */}
       {filteredProposals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {filteredProposals.map(proposal => (
             <ProposalCard key={proposal.id} proposal={proposal} />
           ))}
         </div>
       ) : (
-        <div className="bg-gray-50 rounded-lg p-8 text-center">
-          <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="bg-gray-50 rounded-lg p-6 md:p-8 text-center">
+          <svg className="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-base md:text-lg font-medium text-gray-900 mb-2">
             Nenhuma proposta encontrada
           </h3>
-          <p className="text-gray-600">
+          <p className="text-sm md:text-base text-gray-600">
             Tente ajustar os filtros ou seja o primeiro a criar uma proposta!
           </p>
         </div>

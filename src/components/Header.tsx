@@ -58,8 +58,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
           {/* Logo */}
           <a href="/home" className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <span className="text-2xl">👥</span>
-            <h1 className="text-xl font-bold text-gray-800">Cidadão Ativo</h1>
+            <span className="text-xl md:text-2xl">👥</span>
+            <h1 className="text-lg md:text-xl font-bold text-gray-800">Cidadão Ativo</h1>
           </a>
         </div>
 
@@ -91,20 +91,20 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
         {/* Auth Buttons - Exibidos dependendo do estado de login */}
         {isLoggedIn ? (
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-red-600 font-medium hover:text-red-700 transition-colors"
+              className="px-3 py-2 md:px-4 md:py-2 text-sm md:text-base text-red-600 font-medium hover:text-red-700 transition-colors"
             >
               Sair
             </button>
           </div>
         ) : (
-          <div className="flex items-center space-x-3">
-            <a href="/login" className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors">
+          <div className="flex items-center space-x-2">
+            <a href="/login" className="px-3 py-2 md:px-4 md:py-2 text-sm md:text-base text-blue-600 font-medium hover:text-blue-700 transition-colors">
               Entrar
             </a>
-            <a href="/register" className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="/register" className="px-3 py-2 md:px-4 md:py-2 text-sm md:text-base bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
               Cadastrar
             </a>
           </div>

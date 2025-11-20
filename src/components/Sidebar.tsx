@@ -27,12 +27,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
       }`}
     >
       <div className="p-4">
+        {/* Close Button for Mobile */}
+        <div className="flex justify-end mb-4 lg:hidden">
+          <button
+            onClick={onClose}
+            className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+            aria-label="Fechar menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
         {/* Navigation Menu */}
         <nav className="space-y-2 mb-8">
           {menuItems.map((item, index) => (
             <a
               key={index}
               href={item.url}
+              onClick={onClose}
               className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
                 pathname === item.url
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'

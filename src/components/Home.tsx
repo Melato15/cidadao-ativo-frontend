@@ -101,34 +101,36 @@ export default function Home() {
 	return (
 		<div className="max-w-7xl mx-auto">
 			{/* Page Title */}
-			<div className="mb-8 flex justify-between items-center">
-				<div>
-					<h1 className="text-3xl font-bold text-gray-900">
-						Projetos em Destaque
-					</h1>
-					<p className="text-gray-600 mt-2">
-						Acompanhe e participe dos projetos em desenvolvimento na sua
-						cidade
-					</p>
-				</div>
-				<button
-					onClick={() => setIsModalOpen(true)}
-					className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5"
-						viewBox="0 0 20 20"
-						fill="currentColor"
+			<div className="mb-6 md:mb-8">
+				<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+					<div>
+						<h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+							Projetos em Destaque
+						</h1>
+						<p className="text-sm md:text-base text-gray-600 mt-1 md:mt-2">
+							Acompanhe e participe dos projetos em desenvolvimento na sua
+							cidade
+						</p>
+					</div>
+					<button
+						onClick={() => setIsModalOpen(true)}
+						className="w-full sm:w-auto px-4 py-2.5 md:px-6 md:py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
 					>
-						<path
-							fillRule="evenodd"
-							d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-							clipRule="evenodd"
-						/>
-					</svg>
-					Novo Projeto
-				</button>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-4 w-4 md:h-5 md:w-5"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+						>
+							<path
+								fillRule="evenodd"
+								d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+								clipRule="evenodd"
+							/>
+						</svg>
+						Novo Projeto
+					</button>
+				</div>
 			</div>
 
 			{/* Dashboard Stats */}
@@ -142,27 +144,27 @@ export default function Home() {
 			)}
 
 			{/* Projects Grid */}
-			<div className="space-y-6">
-				<h2 className="text-xl font-semibold text-gray-900">
+			<div className="space-y-4 md:space-y-6">
+				<h2 className="text-lg md:text-xl font-semibold text-gray-900">
 					Projetos Recentes
 				</h2>
 
 				{isLoading ? (
 					<div className="text-center py-12">
 						<div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-						<p className="mt-4 text-gray-600">Carregando projetos...</p>
+						<p className="mt-4 text-sm md:text-base text-gray-600">Carregando projetos...</p>
 					</div>
 				) : mappedProjects.length === 0 ? (
 					<div className="text-center py-12 bg-gray-50 rounded-lg">
-						<p className="text-gray-600 text-lg">
+						<p className="text-base md:text-lg text-gray-600">
 							Nenhum projeto encontrado.
 						</p>
-						<p className="text-gray-500 mt-2">
+						<p className="text-sm md:text-base text-gray-500 mt-2">
 							Seja o primeiro a criar um projeto!
 						</p>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
 						{mappedProjects.map((project) => (
 							<ProjectCard 
 								key={project.id} 

@@ -39,26 +39,26 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" role="region" aria-label="Estatísticas do dashboard">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8" role="region" aria-label="Estatísticas do dashboard">
       {statCards.map((card) => (
         <div
           key={card.id}
-          className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 hover:shadow-md transition-shadow"
           role="article"
           aria-labelledby={`${card.id}-title`}
         >
           <div className="flex items-center">
-            <div className={`flex-shrink-0 ${card.bgColor} rounded-lg p-3`} aria-hidden="true">
-              <span className={`text-2xl ${card.iconColor}`}>{card.icon}</span>
+            <div className={`flex-shrink-0 ${card.bgColor} rounded-lg p-2 md:p-3`} aria-hidden="true">
+              <span className={`text-xl md:text-2xl ${card.iconColor}`}>{card.icon}</span>
             </div>
-            <div className="ml-4 flex-1">
+            <div className="ml-3 md:ml-4 flex-1">
               <p 
                 id={`${card.id}-title`}
-                className="text-sm font-medium text-gray-500 uppercase tracking-wide"
+                className="text-xs md:text-sm font-medium text-gray-500 uppercase tracking-wide"
               >
                 {card.title}
               </p>
-              <p className="text-2xl font-bold text-gray-900" aria-label={`${card.title}: ${card.value}`}>
+              <p className="text-xl md:text-2xl font-bold text-gray-900" aria-label={`${card.title}: ${card.value}`}>
                 {card.value}
               </p>
             </div>
