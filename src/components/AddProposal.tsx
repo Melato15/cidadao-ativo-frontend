@@ -38,7 +38,7 @@ const AddProposal: React.FC<AddProposalProps> = ({ onSubmit, onCancel }) => {
     'Jardim das Flores',
     'Bela Vista',
     'Industrial',
-    'Outros'
+    'Outro'
   ];
 
   const categories = [
