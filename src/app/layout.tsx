@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: 'Cidadão Ativo',
   description: 'Plataforma de participação cidadã e engajamento cívico',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/icons/icon-192x192.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',

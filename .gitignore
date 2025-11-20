@@ -23,3 +23,5 @@ coverage/
 **/public/worker-*.js.map
 /.next/
 /out/
+
+deploy.ps1
