@@ -218,7 +218,7 @@ describe('Login Component', () => {
       
       await waitFor(() => {
         expect(global.fetch).toHaveBeenCalledWith(
-          'http://localhost:3000/auth/login',
+          'http://localhost:3001/auth/login',
           expect.objectContaining({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
