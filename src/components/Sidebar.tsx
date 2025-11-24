@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import { useFilters } from '@/contexts/FilterContext';
+import { NEIGHBORHOODS } from '@/utils/neighborhoods';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -84,49 +85,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option>Todos os Bairros</option>
-              <option>Adhemar Garcia</option>
-              <option>América</option>
-              <option>Anita Garibaldi</option>
-              <option>Atiradores</option>
-              <option>Aventureiro</option>
-              <option>Boa Vista</option>
-              <option>Boehmerwald</option>
-              <option>Bom Retiro</option>
-              <option>Bucarein</option>
-              <option>Centro</option>
-              <option>Comasa</option>
-              <option>Costa e Silva</option>
-              <option>Dona Francisca</option>
-              <option>Espinheiros</option>
-              <option>Fátima</option>
-              <option>Floresta</option>
-              <option>Glória</option>
-              <option>Guanabara</option>
-              <option>Iririú</option>
-              <option>Itaum</option>
-              <option>Itinga</option>
-              <option>Jardim Iririú</option>
-              <option>Jardim Paraíso</option>
-              <option>Jardim Sofia</option>
-              <option>Jarivatuba</option>
-              <option>João Costa</option>
-              <option>Morro do Meio</option>
-              <option>Nova Brasília</option>
-              <option>Paranaguamirim</option>
-              <option>Parque Guarani</option>
-              <option>Petrópolis</option>
-              <option>Pirabeiraba</option>
-              <option>Profipo</option>
-              <option>Rio Bonito</option>
-              <option>Saguaçu</option>
-              <option>Santa Catarina</option>
-              <option>Santo Antônio</option>
-              <option>São Marcos</option>
-              <option>Ulysses Guimarães</option>
-              <option>Vila Cubatão</option>
-              <option>Vila Nova</option>
-              <option>Zona Industrial Norte</option>
-              <option>Zona Industrial Tupy</option>
+              {NEIGHBORHOODS.map((bairro) => (
+                <option key={bairro} value={bairro}>
+                  {bairro}
+                </option>
+              ))}
             </select>
           </div>
 

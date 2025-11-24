@@ -92,19 +92,6 @@ const CommunityProposals: React.FC = () => {
     'Outros'
   ];
 
-  const neighborhoods = [
-    'Todos',
-    'Centro',
-    'Zona Norte',
-    'Zona Sul',
-    'Zona Leste',
-    'Zona Oeste',
-    'Vila Nova',
-    'Jardim das Flores',
-    'Bela Vista',
-    'Industrial'
-  ];
-
   const handleAddProposal = async (newProposalData: Omit<CommunityProposal, 'id' | 'author' | 'createdAt'>) => {
     try {
       const token = localStorage.getItem('access_token');
@@ -189,8 +176,8 @@ const CommunityProposals: React.FC = () => {
   });
 
   const getStats = () => {
-    const totalProposals = proposals.length;
-    const categoriesCount = proposals.reduce((acc, proposal) => {
+    const totalProposals = filteredProposals.length;
+    const categoriesCount = filteredProposals.reduce((acc, proposal) => {
       acc[proposal.category] = (acc[proposal.category] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -281,7 +268,7 @@ const CommunityProposals: React.FC = () => {
             <div className="ml-3 md:ml-4">
               <p className="text-xs md:text-sm font-medium text-purple-900">Bairros Ativos</p>
               <p className="text-xl md:text-2xl font-bold text-purple-600">
-                {new Set(proposals.map(p => p.neighborhood)).size}
+                {new Set(filteredProposals.map(p => p.neighborhood)).size}
               </p>
             </div>
           </div>

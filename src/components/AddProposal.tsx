@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { NEIGHBORHOODS } from '@/utils/neighborhoods';
 
 interface AddProposalFormData {
   title: string;
@@ -27,19 +28,6 @@ const AddProposal: React.FC<AddProposalProps> = ({ onSubmit, onCancel }) => {
   });
 
   const [errors, setErrors] = useState<Partial<AddProposalFormData>>({});
-
-  const neighborhoods = [
-    'Centro',
-    'Zona Norte',
-    'Zona Sul',
-    'Zona Leste',
-    'Zona Oeste',
-    'Vila Nova',
-    'Jardim das Flores',
-    'Bela Vista',
-    'Industrial',
-    'Outro'
-  ];
 
   const categories = [
     'Infraestrutura',
@@ -188,7 +176,7 @@ const AddProposal: React.FC<AddProposalProps> = ({ onSubmit, onCancel }) => {
             `}
           >
             <option value="">Selecione um bairro</option>
-            {neighborhoods.map(neighborhood => (
+            {NEIGHBORHOODS.map(neighborhood => (
               <option key={neighborhood} value={neighborhood}>
                 {neighborhood}
               </option>

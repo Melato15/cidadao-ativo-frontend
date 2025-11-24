@@ -5,6 +5,7 @@ import DashboardStats from '@/components/DashboardStats';
 import ProjectCard from '@/components/ProjectCard';
 import CreateProjectModal from '@/components/CreateProjectModal';
 import { projectsApi, Project, CreateProjectDto, votesApi, Vote } from '@/utils/api';
+import { useFilters } from '@/contexts/FilterContext';
 
 export default function Home() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -12,6 +13,7 @@ export default function Home() {
 	const [error, setError] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [userVotes, setUserVotes] = useState<Record<string, 'up' | 'down'>>({});
+  const { neighborhood: globalNeighborhood } = useFilters();
 
 	const loadProjects = async () => {
 		try {
@@ -82,7 +84,9 @@ export default function Home() {
 	};
 
 	// Mapeia os projetos para o formato esperado pelo ProjectCard
-	const mappedProjects = projects.map((project) => ({
+	const mappedProjects = projects
+    .filter(project => globalNeighborhood === 'Todos os Bairros' || project.neighborhood === globalNeighborhood)
+    .map((project) => ({
 		id: project.id,
 		title: project.title,
 		description: project.description,

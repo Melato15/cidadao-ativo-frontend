@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { CreateProjectDto } from '@/utils/api';
+import { NEIGHBORHOODS } from '@/utils/neighborhoods';
 
 interface CreateProjectModalProps {
   isOpen: boolean;
@@ -161,17 +162,21 @@ export default function CreateProjectModal({
               >
                 Bairro *
               </label>
-              <input
-                type="text"
+              <select
                 id="neighborhood"
                 name="neighborhood"
                 value={formData.neighborhood}
                 onChange={handleChange}
                 required
-                maxLength={50}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Digite o bairro"
-              />
+              >
+                <option value="">Selecione um bairro</option>
+                {NEIGHBORHOODS.map((bairro) => (
+                  <option key={bairro} value={bairro}>
+                    {bairro}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="flex justify-end gap-3 pt-4">

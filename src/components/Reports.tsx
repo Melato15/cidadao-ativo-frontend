@@ -1,5 +1,7 @@
 'use client';
 import React, { useState } from 'react';
+import { useFilters } from '@/contexts/FilterContext';
+import { NEIGHBORHOODS } from '@/utils/neighborhoods';
 
 // Tipos para denúncias
 interface Report {
@@ -65,9 +67,13 @@ const Reports: React.FC = () => {
     comments: []
   });
 
+  const { neighborhood: globalNeighborhood } = useFilters();
+
   // Filtrar denúncias
   const filteredReports = reports.filter(report => {
+    const neighborhoodMatch = globalNeighborhood === 'Todos os Bairros' || report.location.neighborhood === globalNeighborhood;
     return (
+      neighborhoodMatch &&
       (filterStatus === '' || report.status === filterStatus) &&
       (filterCategory === '' || report.category === filterCategory) &&
       (filterPriority === '' || report.priority === filterPriority)
@@ -569,16 +575,19 @@ const Reports: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Bairro <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={newReport.location?.neighborhood || ''}
                     onChange={(e) => setNewReport({ 
                       ...newReport, 
                       location: { ...newReport.location!, neighborhood: e.target.value }
                     })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Ex: Centro"
-                  />
+                  >
+                    <option value="">Selecione um bairro</option>
+                    {NEIGHBORHOODS.map(bairro => (
+                        <option key={bairro} value={bairro}>{bairro}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { reportsApi, Report as ApiReport, CreateReportDto } from '../utils/api';
 import { useFilters } from '@/contexts/FilterContext';
+import { NEIGHBORHOODS } from '@/utils/neighborhoods';
 
 // Mapeamento de categorias
 const categoryMap: { [key: string]: ApiReport['category'] } = {
@@ -311,7 +312,7 @@ const ReportsIntegrated: React.FC = () => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Ativas</p>
               <p className="text-2xl font-bold text-gray-900">
-                {reports.filter(r => r.status === 'active').length}
+                {filteredReports.filter(r => r.status === 'active').length}
               </p>
             </div>
           </div>
@@ -327,7 +328,7 @@ const ReportsIntegrated: React.FC = () => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Em Votação</p>
               <p className="text-2xl font-bold text-gray-900">
-                {reports.filter(r => r.status === 'voting').length}
+                {filteredReports.filter(r => r.status === 'voting').length}
               </p>
             </div>
           </div>
@@ -343,7 +344,7 @@ const ReportsIntegrated: React.FC = () => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Aprovadas</p>
               <p className="text-2xl font-bold text-gray-900">
-                {reports.filter(r => r.status === 'approved').length}
+                {filteredReports.filter(r => r.status === 'approved').length}
               </p>
             </div>
           </div>
@@ -359,7 +360,7 @@ const ReportsIntegrated: React.FC = () => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Alta Prioridade</p>
               <p className="text-2xl font-bold text-gray-900">
-                {reports.filter(r => r.priority === 'high' || r.priority === 'urgent').length}
+                {filteredReports.filter(r => r.priority === 'high' || r.priority === 'urgent').length}
               </p>
             </div>
           </div>
@@ -663,15 +664,18 @@ const ReportsIntegrated: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Localização <span className="text-red-500">*</span>
+                  Bairro <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   value={newReport.location}
                   onChange={(e) => setNewReport({ ...newReport, location: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Ex: Rua das Flores, 123, Centro"
-                />
+                >
+                  <option value="">Selecione um bairro</option>
+                  {NEIGHBORHOODS.map(bairro => (
+                    <option key={bairro} value={bairro}>{bairro}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
