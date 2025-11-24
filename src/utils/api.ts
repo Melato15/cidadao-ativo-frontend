@@ -323,3 +323,36 @@ export const reportsApi = {
     }
   },
 };
+
+export interface ProposalStatsCategory {
+  category: string;
+  count: number;
+}
+
+export interface ProposalStatsMonthly {
+  month: string;
+  propostas: number;
+  aprovadas: number;
+}
+
+export const communityProposalsApi = {
+  async getStatsByCategory(): Promise<ProposalStatsCategory[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/community-proposals/stats/category`
+    );
+    if (!response.ok) {
+      throw new Error("Falha ao carregar estatísticas por categoria");
+    }
+    return response.json();
+  },
+
+  async getStatsMonthly(): Promise<ProposalStatsMonthly[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/community-proposals/stats/monthly`
+    );
+    if (!response.ok) {
+      throw new Error("Falha ao carregar estatísticas mensais");
+    }
+    return response.json();
+  },
+};

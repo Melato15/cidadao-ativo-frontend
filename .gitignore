@@ -25,3 +25,5 @@ coverage/
 /out/
 
 deploy.ps1
+
+sonar-project.properties

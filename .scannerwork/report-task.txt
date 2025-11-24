@@ -3,5 +3,5 @@ projectKey=Melato15_cidadao-ativo-frontend
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.76733
 dashboardUrl=https://sonarcloud.io/dashboard?id=Melato15_cidadao-ativo-frontend
-ceTaskId=AZqo1PQm072eS-uTMsR-
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZqo1PQm072eS-uTMsR-
+ceTaskId=AZqo74kwlMKAGbezL71u
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZqo74kwlMKAGbezL71u
