@@ -13,6 +13,7 @@ export default function Home() {
 	const [error, setError] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [userVotes, setUserVotes] = useState<Record<string, 'up' | 'down'>>({});
+	const [userRole, setUserRole] = useState<string | null>(null);
   const { neighborhood: globalNeighborhood } = useFilters();
 
 	const loadProjects = async () => {
@@ -50,6 +51,8 @@ export default function Home() {
 
 	useEffect(() => {
 		loadProjects();
+		const role = localStorage.getItem('user_role');
+		setUserRole(role);
 	}, []);
 
 	const handleCreateProject = async (data: CreateProjectDto) => {
@@ -116,24 +119,26 @@ export default function Home() {
 							cidade
 						</p>
 					</div>
-					<button
-						onClick={() => setIsModalOpen(true)}
-						className="w-full sm:w-auto px-4 py-2.5 md:px-6 md:py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-4 w-4 md:h-5 md:w-5"
-							viewBox="0 0 20 20"
-							fill="currentColor"
+					{(userRole === 'councilor' || userRole === 'admin') && (
+						<button
+							onClick={() => setIsModalOpen(true)}
+							className="w-full sm:w-auto px-4 py-2.5 md:px-6 md:py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
 						>
-							<path
-								fillRule="evenodd"
-								d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-								clipRule="evenodd"
-							/>
-						</svg>
-						Novo Projeto
-					</button>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-4 w-4 md:h-5 md:w-5"
+								viewBox="0 0 20 20"
+								fill="currentColor"
+							>
+								<path
+									fillRule="evenodd"
+									d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+									clipRule="evenodd"
+								/>
+							</svg>
+							Novo Projeto
+						</button>
+					)}
 				</div>
 			</div>
 

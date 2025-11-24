@@ -105,6 +105,7 @@ const Login: React.FC = () => {
         
         // Store the token in localStorage
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('user_role', data.role);
         
         // Navigate to home page using Next.js router
         router.push('/home');
