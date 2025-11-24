@@ -88,7 +88,7 @@ const CommunityProposals: React.FC = () => {
     'Educação',
     'Saúde',
     'Cultura',
-    'Transporte',
+    'Transportes',
     'Outros'
   ];
 
