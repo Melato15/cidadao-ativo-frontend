@@ -224,7 +224,7 @@ const CommunityProposals: React.FC = () => {
         <div>
           <h2 className="text-xl md:text-2xl font-bold text-gray-900">Propostas da Comunidade</h2>
           <p className="text-sm md:text-base text-gray-600 mt-1">
-            Compartilhe suas ideias para melhorar o bairro
+            Compartilhe sua ideia para melhorar o bairro
           </p>
         </div>
         {!showAddForm && (
